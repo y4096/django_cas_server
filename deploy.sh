@@ -16,10 +16,10 @@ case $env in
     exit
 esac
 
-sudo docker stop ${project}_${env} 2>/dev/null
-sudo docker rm -f ${project}_${env} 2>/dev/null
-echo "remove image"
-sudo docker rmi tbgd/${project}_${env}:${ver}
+#sudo docker stop ${project}_${env} 2>/dev/null
+#sudo docker rm -f ${project}_${env} 2>/dev/null
+#echo "remove image"
+#sudo docker rmi tbgd/${project}_${env}:${ver}
 sudo docker build . -t tbgd/${project}_${env}:${ver}
 #sudo docker push tbgd/${project}_${env}:${ver}
 #sudo docker pull tbgd/${project}_${env}:${ver}
