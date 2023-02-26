@@ -132,7 +132,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MAMA_CAS_SERVICES = [
     {
         # 必填项，客户端允许访问的域名
-        'SERVICE': 'http://192.168.31.10',
+        'SERVICE': 'http://127.0.0.1',
         # 回调模式，具体参考官方文档
         'CALLBACKS': [
             'mama_cas.callbacks.user_model_attributes',
