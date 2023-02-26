@@ -15,4 +15,3 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 ENTRYPOINT ["bash", "start.sh"]
-CMD ["bash", "/data/$PROJECT_NAME/start.sh"]
