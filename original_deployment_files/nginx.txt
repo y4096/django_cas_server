@@ -1,0 +1,58 @@
+upstream {project}_{env}_upstream{{
+    # connect to this socket
+    server 127.0.0.1:{port};
+}}
+server {{
+    server_name    {domain_name};
+    access_log /data/{project}_docker_shard/{env}/logs/nginx_access.log;
+    error_log  /data/{project}_docker_shard/{env}/logs/nginx_error.log;
+    client_body_buffer_size 5M;
+    proxy_buffering on;
+    proxy_buffer_size 8k;
+    proxy_buffers 24 8k;
+    proxy_busy_buffers_size 16k;
+    proxy_max_temp_file_size 2048m;
+    proxy_temp_file_write_size 32k;
+
+    charset     utf-8;
+    #Max upload size
+    client_max_body_size 75M;   # adjust to taste
+    location / {{
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE, PUT';
+        add_header 'Access-Control-Allow-Headers' '*' ;
+        add_header 'Access-Control-Expose-Headers' 'Content-Length,Content-Range';
+        uwsgi_pass  {project}_{env}_upstream;
+        uwsgi_read_timeout 600;
+        uwsgi_send_timeout 600;
+
+        # http://nginx.org/en/docs/http/ngx_http_uwsgi_module.html#uwsgi_buffer_size
+        uwsgi_buffer_size 4m;
+        uwsgi_buffers 8 4m;
+        uwsgi_busy_buffers_size 16m;
+        include     /etc/nginx/uwsgi_params; # or the uwsgi_params you installed manually
+    }}
+    location /static {{
+        expires 7d;
+        access_log off;
+        add_header Cache-Control "public";
+        alias /data/{project}_docker_shard/{env}/assets;     # Django project's static files
+    }}
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/{domain_name}/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/{domain_name}/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}}
+
+server {{
+    if ($host = {domain_name}) {{
+        return 301 https://$host$request_uri;
+    }} # managed by Certbot
+
+    listen         80;
+    server_name    {domain_name};
+    return 404; # managed by Certbot
+}}
