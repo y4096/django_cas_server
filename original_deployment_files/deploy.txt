@@ -36,5 +36,5 @@ sudo cp config/{project}_stage.conf /etc/nginx/conf.d/ && \
 sudo cp config/{project}_prod.conf /etc/nginx/conf.d/ && \
 sudo certbot certonly --standalone -n --duplicate -m vpsadmin@toolsforest.com \
 -d {stage_domain} -d {prod_domain} --agree-tos && \
-sudo nginx -s reload
+sudo nginx -s reload\
 \033[0m"
