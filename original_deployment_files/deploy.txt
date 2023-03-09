@@ -32,9 +32,9 @@ sudo docker run -itd --name ${{project}}_${{env}} --net host --env site_env=${{e
 
 echo "copy nginx files and generate cert command:"
 echo -e "\033[46;37m\
-sudo cp config/{project}_stage.conf /etc/nginx/conf.d/ && \
-sudo cp config/{project}_prod.conf /etc/nginx/conf.d/ && \
 sudo certbot certonly --nginx -n --duplicate -m vpsadmin@toolsforest.com \
 -d {stage_domain} -d {prod_domain} --agree-tos && \
+sudo cp config/{project}_stage.conf /etc/nginx/conf.d/ && \
+sudo cp config/{project}_prod.conf /etc/nginx/conf.d/ && \
 sudo nginx -s reload\
 \033[0m"
