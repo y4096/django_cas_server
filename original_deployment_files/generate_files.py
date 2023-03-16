@@ -33,4 +33,8 @@ def generate(stage_port, prod_port, project, stage_domain, prod_domain):
 
 
 if __name__ == '__main__':
-    generate(8081, 8091, 'go_tube', 'test.gotube.app', 'api.gotube.app')
+    generate(8081, 8091, 'fast_dog', 'test.fastdoggie.net', 'api.fastdoggie.net')
+
+"""
+sudo certbot certonly --nginx -n --duplicate -m vpsadmin@toolsforest.com -d api.fastdoggie.net --agree-tos
+"""
