@@ -8,7 +8,7 @@ if [ "$site_env" == "prod" ]; then
   python manage.py migrate --settings=settings.prod
 
   echo "Create super user"
-  echo "from django.contrib.auth.models import User; User.objects.create_superuser('nppppU8rwbd5KMjYqixl', 'N8FhT@gmail.com', 'NZFcTOPutIy&vkj#o') if not User.objects.filter(username='OOOkp2A16nX8aVm3').count() else print('Super user already exist')" | python manage.py shell --settings=settings.prod
+  echo "from django.contrib.auth.models import User; User.objects.create_superuser('nppppU8rwbd5KMjYqixl', 'WHBfd@cc.com', 'NZFcTOPutIy&vkj#o') if not User.objects.filter(username='nppppU8rwbd5KMjYqixl').count() else print('Super user already exist')" | python manage.py shell --settings=settings.prod
 
   echo "uwsgi"
   uwsgi --ini ../config/uwsgi.prod.ini
