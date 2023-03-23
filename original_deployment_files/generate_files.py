@@ -26,6 +26,11 @@ def generate(stage_port, prod_port, project, stage_domain, prod_domain):
 
     # deploy.sh
     read_write('deploy', '../deploy.sh')
+    # 获取当前文件的权限
+    current_permissions = os.stat('../deploy.sh').st_mode
+    # 将文件的权限改为添加可执行权限后的权限
+    os.chmod('../deploy.sh', current_permissions | 0o111)
+
     # Dockerfile
     read_write('dockerfile', '../Dockerfile')
     # start.sh
@@ -33,8 +38,4 @@ def generate(stage_port, prod_port, project, stage_domain, prod_domain):
 
 
 if __name__ == '__main__':
-    generate(8081, 8091, 'fast_dog', 'test.fastdoggie.net', 'api.fastdoggie.net')
-
-"""
-sudo certbot certonly --nginx -n --duplicate -m vpsadmin@toolsforest.com -d api.fastdoggie.net --agree-tos
-"""
+    generate(8081, 8091, 'easy_scanner', 'test.easyscannerapp.com', 'api.easyscannerapp.com')
